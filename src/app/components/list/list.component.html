@@ -1,0 +1,225 @@
+<div class="list">
+  <div
+    class="member-list"
+    cdkDropListGroup
+    [cdkDropListGroupDisabled]="isSmallScreen"
+  >
+    <div
+      class="member-wrap"
+      *ngFor="let member of memberList; let i = index"
+      [ngStyle]="
+        docWidth > 914 ? { width: 100 / memberList.length + '%' } : null
+      "
+    >
+      <div [ngStyle]="{ backgroundColor: member.color }" class="member-top">
+        <ng-container *ngIf="onDeleteMember !== member.name">
+          <button
+            class="del-mem"
+            (click)="onDeleteMember = member.name"
+            [disabled]="onDeleteMember !== '' && onDeleteMember !== member.name"
+          >
+            Delete
+          </button>
+          <p class="member-name">{{ member.name }}</p>
+          <p class="member-class">{{ member.class }}</p>
+          <div class="member-buttons">
+            <button (click)="switchView(0, i)">
+              {{ showDones[i].show ? "Show to do" : "Show done" }}
+            </button>
+            <button (click)="switchView(1, i)">
+              {{ showDones[i].sort ? "Sort by date" : "Sort by name" }}
+            </button>
+            <button (click)="switchView(2, i)">
+              {{ showDones[i].dir ? "Ascending" : "Descending" }}
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="onDeleteMember === member.name">
+          <form
+            #deleteForm="ngForm"
+            (ngSubmit)="terminateMember(deleteForm, member.name)"
+            class="extend"
+          >
+            <div class="pad5">
+              <label style="white-space: nowrap" for="reasign"
+                >Reasign tasks?</label
+              >
+              <select ngModel name="reasign">
+                <option selected value="delete">Delete tasks</option>
+                <ng-container *ngFor="let mem of memberList">
+                  <option
+                    *ngIf="mem.name !== member.name"
+                    value="{{ mem.name }}"
+                  >
+                    {{ mem.name }}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="member-buttons">
+              <button type="button" (click)="onDeleteMember = ''">
+                Cancel
+              </button>
+              <button type="submit">Terminate</button>
+            </div>
+          </form>
+        </ng-container>
+      </div>
+
+      <div
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="member.name"
+        class="task-list"
+      >
+        <div
+          cdkDrag
+          [cdkDragData]="task.id"
+          *ngFor="
+            let task of tasklist
+              | memberSort : member.name : pipeChangeDetection
+              | donePipe : showDones[i].show : pipeChangeDetection
+              | sort
+                : showDones[i].sort
+                : showDones[i].dir
+                : pipeChangeDetection
+          "
+          class="task-item"
+        >
+          <h4 class="item-name">{{ task.name }}</h4>
+
+          <div class="item-details">
+            <ng-container *ngIf="onEdit !== task.id">
+              <div id="aaa" style="width: 100%; position: relative">
+                <div *ngIf="task.isDone" class="done-maks">
+                  <p class="done-text">DONE</p>
+                </div>
+                <p>Assigned by: {{ task.assignedBy }}</p>
+                <p>on: {{ task.created | date : "shortDate" }}</p>
+                <p>Deadline: {{ task.deadline | date : "shortDate" }}</p>
+                <p>Urgency: {{ task.importance }}</p>
+                <p *ngIf="task.isDone">
+                  Done: {{ task.end | date : "shortDate" }}
+                </p>
+              </div>
+
+              <div class="manage-buttons">
+                <p class="item-id">{{ task.id }}</p>
+                <button
+                  *ngIf="!task.end && onEdit !== task.id"
+                  class="close"
+                  (click)="onRemoveTask(task)"
+                >
+                  Delete
+                </button>
+                <button
+                  *ngIf="!task.end && onEdit !== task.id"
+                  class="close"
+                  (click)="onDoneTask(task)"
+                >
+                  Done
+                </button>
+                <button
+                  *ngIf="!task.end"
+                  class="close"
+                  (click)="startEdit(task.id)"
+                  [disabled]="onEdit !== 0 && onEdit !== task.id"
+                >
+                  {{ onEdit === task.id ? "Save" : "Edit" }}
+                </button>
+                <button
+                  *ngIf="!task.end && onEdit == task.id"
+                  class="close"
+                  (click)="startEdit(task.id)"
+                >
+                  Cancel
+                </button>
+                <button
+                  *ngIf="task.end && onEdit !== task.id"
+                  class="close"
+                  (click)="onUndoneTask(task)"
+                >
+                  Back to Do
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="onEdit === task.id">
+              <form
+                #editForm="ngForm"
+                (ngSubmit)="onEditTask(editForm)"
+                style="width: 100%"
+              >
+                <div class="edit-mini-flex">
+                  <p>Name:</p>
+                  <input
+                    [ngModel]="task.name"
+                    ngModel
+                    name="name"
+                    type="text"
+                  />
+                </div>
+                <div *ngIf="isSmallScreen" class="edit-mini-flex">
+                  <p>Assigned to:</p>
+                  <select [ngModel]="task.member" name="member">
+                    <option
+                      *ngFor="let membero of memberList"
+                      value="{{ membero.name }}"
+                    >
+                      {{ membero.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="edit-mini-flex">
+                  <p>Assigned by:</p>
+                  <select [ngModel]="task.assignedBy" name="for">
+                    <option
+                      *ngFor="let member of memberList"
+                      value="{{ member.name }}"
+                    >
+                      {{ member.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="edit-mini-flex">
+                  <p>on:</p>
+                  <input [ngModel]="task.created" name="created" type="date" />
+                </div>
+                <div class="edit-mini-flex">
+                  <p>Deadline:</p>
+                  <input
+                    [ngModel]="task.deadline"
+                    name="deadline"
+                    type="date"
+                    [value]="task.deadline"
+                  />
+                </div>
+                <div class="edit-mini-flex">
+                  <p>Urgency:</p>
+                  <select [ngModel]="task.importance" name="urgent">
+                    <option value="low">Low</option>
+                    <option selected value="normal">Normal</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+
+                <div class="manage-buttons">
+                  <p class="item-id">{{ task.id }}</p>
+                  <button
+                    type="submit"
+                    class="close"
+                    [disabled]="onEdit !== 0 && onEdit !== task.id"
+                  >
+                    {{ onEdit === task.id ? "Save" : "Edit" }}
+                  </button>
+                  <button class="close" (click)="onCancelEdit(task)">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

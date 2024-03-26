@@ -1,27 +1,23 @@
-# FccProject
+# Familly Command Centre
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
+Simple App builded with Angular and some RxJS. 
 
-## Development server
+## Basic info
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+-Data is stored in LocalStorage,
 
-## Code scaffolding
+-User can Add new Members and Tasks,
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+-User can Do/UnDo tasks,
 
-## Build
+-User can Edit tasks,
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+-Mobile Friendly,
 
-## Running unit tests
+-On Desktop version tasks can be dragged thanks to CDK DragDrop module,
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+-All changes are saved to history
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

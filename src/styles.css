@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400&display=swap');
+  
+
+html{
+    font-size: 20px;
+    font-family: 'Comfortaa', cursive;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body{
+    margin:0;
+    padding: 0;
+}
+:root{
+    --color-onyx: #2E3532;
+    --color-claret: #8B2635;
+    --color-alabaster: #E0E2DB;
+    --color-timber: #D2D4C8;
+    --color-tea: #D3EFBD;
+    --fandango: #af4d98ff;
+    --thulian-pink: #d66ba0ff;
+    --melon: #e5a9a9ff;
+    --dutch-white: #f4e4baff;
+    --ice-blue: #9df7e5ff;
+}
+button:disabled{
+    cursor: default;
+    pointer-events: none;
+}

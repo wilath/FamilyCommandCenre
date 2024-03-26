@@ -1,0 +1,109 @@
+<div class="flex-wrap">
+    <div class="who-edit">
+        <label class="mem-lab" for="members">Who's Editing?</label>
+        <select
+        class="mem-sel"
+        [(ngModel)]="editor"
+        (ngModelChange)="editorChange()"
+        id="member"
+        >
+        <ng-container *ngFor="let member of members; let i = index">
+            <option value="{{ member.name }}">{{ member.name }}</option>
+        </ng-container>
+        </select>
+    </div>
+    <div class="add-manager">
+        <div class="option-buttons">
+        <button (click)="changeOption('Task')" class="opt-but but-active">
+            New Task
+        </button>
+        <button (click)="changeOption('Member')" class="opt-but">
+            New Member
+        </button>
+        </div>
+        <ng-container *ngIf="whatDo === 'Task'">
+        <form
+            class="form-display"
+            #taskForm="ngForm"
+            (ngSubmit)="onSubmitTask(taskForm)"
+        >
+            <label for="name">Task Name:</label>
+            <input autocomplete="off" required ngModel name="name" type="text" />
+            <label for="for">Assign To:</label>
+            <select required ngModel name="for">
+            <ng-container *ngFor="let member of members">
+                <option value="{{ member.name }}">{{ member.name }}</option>
+            </ng-container>
+            </select>
+            <label for="deadline">Deadline:</label>
+            <input ngModel name="deadline" type="date" />
+            <label for="imporant">Urgency:</label>
+            <select required ngModel name="urgent">
+            <option value="low">Low</option>
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+            </select>
+            <button type="submit" [disabled]="!taskForm.valid">Add</button>
+        </form>
+        </ng-container>
+        <ng-container *ngIf="whatDo === 'Member'">
+        <form
+            #memberForm="ngForm"
+            (ngSubmit)="onSubmitMember(memberForm)"
+            class="form-display"
+        >
+            <label for="name">Name:</label>
+            <input type="text" required ngModel name="name" />
+            <label for="for">Class:</label>
+            <select ngModel required name="class" id="">
+            <option value="Adult">Adult</option>
+            <option value="Child">Child</option>
+            <option value="Pet">Pet</option>
+            <option value="Guest">Guest</option>
+            </select>
+            <label for="color">Color:</label>
+            <div class="color-buttons">
+            <button
+                type="button"
+                class="color-button"
+                (click)="colorPick('var(--fandango)', 0)"
+            ></button>
+            <button
+                type="button"
+                class="color-button"
+                (click)="colorPick('var(--thulian-pink)', 1)"
+            ></button>
+            <button
+                type="button"
+                class="color-button"
+                (click)="colorPick('var(--melon)', 2)"
+            ></button>
+            <button
+                type="button"
+                class="color-button"
+                (click)="colorPick('var(--dutch-white)', 3)"
+            ></button>
+            <button
+                type="button"
+                class="color-button"
+                (click)="colorPick('var(--ice-blue)', 4)"
+            ></button>
+            </div>
+
+            <button type="submit" [disabled]="!memberForm.valid">Add</button>
+        </form>
+        </ng-container>
+    </div>
+    <div class="last-mohakin">
+        <div class="extend">
+            <div class="history-wrap">
+                <p class="history-pop" *ngFor="let his of history">{{ his }}</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p><i class="fa-regular fa-copyright"></i> Daniel Redzynski</p>
+            <a  href="https://github.com/wilath" target="_blank"><i  class="fa-brands fa-github"></i> GitHub Profile</a>
+            <a href="https://www.linkedin.com/in/daniel-redzynski-6562651b9/" target="_blank"><i class="fa-brands fa-linkedin"></i> Linkedin Profile</a>
+        </div>
+    </div>
+</div>

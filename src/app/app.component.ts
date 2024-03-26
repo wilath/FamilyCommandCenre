@@ -1,13 +1,29 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'fcc-project';
+export class AppComponent implements OnInit {
+ 
+  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  showMenu: boolean = true;
+  isSmallScreen: boolean = false;
+
+
+  public ngOnInit(): void {
+    this.setResponsive();
+  }
+
+  private setResponsive() {
+    this.breakpointObserver
+      .observe(['(max-width: 1350px)'])
+      .subscribe((result) => {
+        this.isSmallScreen = result.matches;
+        this.showMenu = !result.matches;
+      });
+  }
 }

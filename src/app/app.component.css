@@ -1,0 +1,133 @@
+.wrap {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-new-items-common {
+  position: fixed;
+  background-color: rgb(109, 106, 106);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.add-new-items {
+  position: fixed;
+  width: 15rem;
+  height: 100vh;
+}
+.add-new-items-closed {
+  width: 100%;
+  min-height: 50px;
+}
+
+.add-new-items-open {
+  width: 100%;
+  height: 100vh;
+}
+
+.main-view {
+  position: relative;
+  background-color: rgba(89, 131, 252, 1);
+  background-image: linear-gradient(
+    208deg,
+    rgba(89, 131, 252, 1) 11%,
+    rgba(41, 53, 86, 1) 92%
+  );
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+  padding-left: 15rem;
+  z-index: 1;
+}
+#wut {
+  display: none;
+}
+.but-wrap {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.39);
+  border-radius: 50%;
+  width: 42px;
+  aspect-ratio: 1;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  transition: all 0.3s linear;
+  margin-top: 4px;
+}
+.but-wrap:hover {
+  background-color: rgba(255, 255, 255, 0.76);
+}
+@media only screen and (max-width: 1350px) {
+  .main-view {
+    padding-left: 0;
+    padding-top: 50px;
+  }
+  #wut {
+    display: block;
+  }
+}
+
+/*  BURGER */
+
+input {
+  pointer-events: none;
+  opacity: 0;
+}
+input + label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  height: 45px;
+  width: 46px;
+  z-index: 5;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input + label .burger-container {
+  position: relative;
+  height: 2rem;
+  width: 1.2rem;
+}
+input + label .burger-container span {
+  position: absolute;
+  width: 100%;
+  height: 0.1rem;
+  top: 50%;
+  margin-top: -0.1rem;
+  left: 0;
+  display: block;
+  background: rgba(12, 12, 12, 0.726);
+  transition: 0.3s;
+}
+input + label .burger-container span:first-child {
+  top: 0.6rem;
+}
+input + label .burger-container span:last-child {
+  top: 1.4rem;
+}
+input:checked + label .burger-container span {
+  opacity: 0;
+  top: 50%;
+}
+input:checked + label .burger-container span:first-child {
+  opacity: 1;
+  transform: rotate(405deg);
+}
+input:checked + label .burger-container span:last-child {
+  opacity: 1;
+  transform: rotate(-405deg);
+}
+input:checked ~ nav {
+  height: 100%;
+}
+input:checked ~ nav ul {
+  opacity: 1;
+  pointer-events: all;
+}
