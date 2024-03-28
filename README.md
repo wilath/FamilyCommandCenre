@@ -8,7 +8,7 @@ My family task management application allows easy addition of family members and
 
 - Angular,
 
-- Angulard CDK,
+- Angular CDK,
 
 - RxJS
 
