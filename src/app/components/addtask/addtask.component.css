@@ -44,16 +44,14 @@ button[type='submit']{
 
 input{
   position: relative;
-  outline: none;
   border: none;
   background-color: rgba(255, 255, 255, 0.267);
   font-size: 1.25rem;
   font-family: 'Comfortaa', cursive;
-  width: 100%;
+  width: calc(100% - 4px);
   font-weight: 100;
 }
 select{
-  outline: none;
   border: none;
   background-color: rgba(255, 255, 255, 0.267);
   font-size: 1.25rem;
@@ -62,18 +60,15 @@ select{
   font-weight: 100;
   cursor: pointer;
 }
+
 label{
   text-align: center;
   margin-left: 5px;
 }
+
 select option {
   background: rgba(0, 0, 0, 0.3);
   border: none;
-  
-}
-select option:hover {
-  background: rgba(204, 8, 8, 0.3);
-  cursor: pointer;
   
 }
 
@@ -85,11 +80,13 @@ select option:hover {
   border: 1px solid rgba(255, 255, 255, 0.267);
   border-radius: 8px;
 }
+
 .mem-sel{
   width: 100%;
   font-size: 1.2rem;
   font-weight: 100;
 }
+
 .mem-lab{
   width: 100%;
   font-size: 1.2rem;
@@ -250,4 +247,8 @@ select option:hover {
   }
   .footer p  i {
     color: rgb(150, 0, 115)
+  }
+  .footer > *:focus-visible{
+    text-decoration: underline;
+    outline: none;
   }
